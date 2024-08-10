@@ -3,8 +3,15 @@ package treeImplementation;
 import Interfaces.BSTreeADT;
 import Interfaces.Iterator;
 
-public class BSTree<E> implements BSTreeADT {
+public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 
+  private BSTreeNode<E> root;
+  private int size;
+
+  public BSTree() {
+    root = null;
+    size = 0;
+  }
   /**
    * The node at the root of the Binary Search Tree will be returned.
    *
@@ -12,8 +19,8 @@ public class BSTree<E> implements BSTreeADT {
    * the tree is empty
    */
   @Override
-  public BSTreeNode getRoot() {
-    return null;
+  public BSTreeNode<E> getRoot() {
+    return root;
   }
 
   /**
@@ -24,7 +31,14 @@ public class BSTree<E> implements BSTreeADT {
    */
   @Override
   public int getHeight() {
-    return 0;
+    return getHeight(root);
+  }
+
+  private int getHeight(BSTreeNode<E> node) {
+    if (node == null) {
+      return -1;
+    }
+    return 1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight()));
   }
 
   /**
@@ -35,7 +49,7 @@ public class BSTree<E> implements BSTreeADT {
    */
   @Override
   public int size() {
-    return 0;
+    return size;
   }
 
   /**
@@ -53,7 +67,8 @@ public class BSTree<E> implements BSTreeADT {
    */
   @Override
   public void clear() {
-
+    root = null;
+    size = 0;
   }
 
   /**
@@ -67,8 +82,9 @@ public class BSTree<E> implements BSTreeADT {
    * @throws NullPointerException if the element being passed in is null
    */
   @Override
-  public boolean contains(Comparable entry) throws NullPointerException {
-    return false;
+  public boolean contains(E entry) throws NullPointerException {
+    if (entry == null) throw new NullPointerException("Entry can't be null");
+    return search(entry) != null;
   }
 
   /**
@@ -79,8 +95,23 @@ public class BSTree<E> implements BSTreeADT {
    * @throws NullPointerException if the element being passed in is null
    */
   @Override
-  public BSTreeNode search(Comparable entry) throws NullPointerException {
-    return null;
+  public BSTreeNode<E> search(E entry) throws NullPointerException {
+    if (entry == null) throw new NullPointerException("Entry can't be null");
+    return search(root, entry);
+  }
+
+  private BSTreeNode<E> search(BSTreeNode<E> node, E entry) {
+    if (node == null) {
+      return null;
+    }
+    int cmp = entry.compareTo(node.getData());
+    if (cmp < 0) {
+      return search(node.getLeft(), entry);
+    } else if (cmp > 0) {
+      return search(node.getRight(), entry);
+    } else {
+      return node;
+    }
   }
 
   /**
@@ -92,8 +123,36 @@ public class BSTree<E> implements BSTreeADT {
    * @throws NullPointerException if the element being passed in is null
    */
   @Override
-  public boolean add(Comparable newEntry) throws NullPointerException {
-    return false;
+  public boolean add(E newEntry) throws NullPointerException {
+    if (newEntry == null) throw new NullPointerException("Entry can't be null");
+    if (root == null) {
+      root = new BSTreeNode<>(newEntry);
+      size++;
+      return true;
+    }
+    return add(root, null, newEntry);
+  }
+
+  private boolean add(BSTreeNode<E> node, BSTreeNode<E> parent, E entry) {
+    if (node == null) {
+      BSTreeNode<E> newNode = new BSTreeNode<>(entry);
+      newNode.setParent(parent);
+      if (entry.compareTo(parent.getData()) < 0) {
+        parent.setLeft(newNode);
+      } else {
+        parent.setRight(newNode);
+      }
+      size++;
+      return true;
+    }
+    int cmp = entry.compareTo(node.getData());
+    if (cmp < 0) {
+      return add(node.getLeft(), node, entry);
+    } else if (cmp > 0) {
+      return add(node.getRight(), node, entry);
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -103,7 +162,7 @@ public class BSTree<E> implements BSTreeADT {
    * @return the removed element or null if the tree is empty
    */
   @Override
-  public BSTreeNode removeMin() {
+  public BSTreeNode<E> removeMin() {
     return null;
   }
 
@@ -151,3 +210,4 @@ public class BSTree<E> implements BSTreeADT {
     return null;
   }
 }
+
