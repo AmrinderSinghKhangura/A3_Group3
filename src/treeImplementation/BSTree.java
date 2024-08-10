@@ -59,7 +59,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    */
   @Override
   public boolean isEmpty() {
-    return false;
+    return size == 0;
   }
 
   /**
