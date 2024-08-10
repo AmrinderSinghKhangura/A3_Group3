@@ -105,6 +105,8 @@ class BSTreeTests {
 
   @Test
   void inorderIterator() {
+    assertEquals(2, tree.inorderIterator().next());
+    assertEquals(3, tree.inorderIterator().next());
   }
 
   @Test

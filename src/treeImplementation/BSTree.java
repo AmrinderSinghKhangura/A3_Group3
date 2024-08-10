@@ -163,7 +163,20 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    */
   @Override
   public BSTreeNode<E> removeMin() {
-    return null;
+    if (root == null) {
+      return null;
+    }
+    BSTreeNode<E> node = root;
+    while (node.getLeft() != null) {
+      node = node.getLeft();
+    }
+    if (node == root) {
+      root = root.getRight();
+    } else {
+      node.getParent().setLeft(node.getRight());
+    }
+    size--;
+    return node;
   }
 
   /**
@@ -173,8 +186,21 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    * @return the removed element or null if the tree is empty
    */
   @Override
-  public BSTreeNode removeMax() {
-    return null;
+  public BSTreeNode<E> removeMax() {
+    if (root == null) {
+      return null;
+    }
+    BSTreeNode<E> node = root;
+    while (node.getRight() != null) {
+      node = node.getRight();
+    }
+    if (node == root) {
+      root = root.getLeft();
+    } else {
+      node.getParent().setRight(node.getLeft());
+    }
+    size--;
+    return node;
   }
 
   /**
@@ -184,7 +210,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    * @return an iterator with the elements in the natural order
    */
   @Override
-  public Iterator inorderIterator() {
+  public Iterator<E> inorderIterator() {
     return null;
   }
 
