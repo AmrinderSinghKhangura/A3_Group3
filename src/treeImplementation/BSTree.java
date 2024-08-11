@@ -3,6 +3,7 @@ package treeImplementation;
 import Interfaces.BSTreeADT;
 import Interfaces.Iterator;
 
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
@@ -304,7 +305,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
       }
 
       @Override
-      public E next() throws NoSuchElementException{
+      public E next() throws NoSuchElementException {
         if(!hasNext()){
           throw new NoSuchElementException("No More Elements found in the Tree");
         }
