@@ -14,6 +14,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
     root = null;
     size = 0;
   }
+
   /**
    * The node at the root of the Binary Search Tree will be returned.
    *
@@ -279,8 +280,34 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    */
   @Override
   public Iterator<E> postorderIterator() {
+    Stack<BSTreeNode<E>> stack = new Stack<>();
+    Stack<BSTreeNode<E>> output = new Stack<>();
+    if (root != null) {
+      stack.push(root);
+    }
 
-    return null;
+    while (!stack.isEmpty()) {
+      BSTreeNode<E> node = stack.pop();
+      output.push(node);
+      if (node.getLeft() != null) {
+        stack.push(node.getLeft());
+      }
+      if (node.getRight() != null) {
+        stack.push(node.getRight());
+      }
+    }
+
+    return new Iterator<E>() {
+      @Override
+      public boolean hasNext() {
+        return !output.isEmpty();
+      }
+
+      @Override
+      public E next() {
+        return output.pop().getData();
+      }
+    };
 
   }
 }

@@ -134,5 +134,15 @@ class BSTreeTests {
 
   @Test
   void postorderIterator() {
+    Iterator<Integer> iterator = tree.postorderIterator();
+    assertEquals(2, iterator.next());
+    assertTrue(iterator.hasNext());
+    assertEquals(4, iterator.next());
+    assertEquals(3, iterator.next());
+    assertEquals(6, iterator.next());
+    assertEquals(8, iterator.next());
+    assertEquals(7, iterator.next());
+    assertEquals(5, iterator.next());
+    assertFalse(iterator.hasNext());
   }
 }
