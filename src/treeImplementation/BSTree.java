@@ -220,7 +220,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
       stack.push(node);
       node = node.getLeft();
     }
-    return new Iterator<E>() {
+    return new Iterator<>() {
       @Override
       public boolean hasNext() {
         return !stack.isEmpty();
@@ -252,7 +252,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
     if (root != null) {
       stack.push(root);
     }
-    return new Iterator<E>() {
+    return new Iterator<>() {
       @Override
       public boolean hasNext() {
         return !stack.isEmpty();
@@ -297,7 +297,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
       }
     }
 
-    return new Iterator<E>() {
+    return new Iterator<>() {
       @Override
       public boolean hasNext() {
         return !output.isEmpty();
