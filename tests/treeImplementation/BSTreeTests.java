@@ -1,5 +1,6 @@
 package treeImplementation;
 
+import Interfaces.Iterator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,12 +106,30 @@ class BSTreeTests {
 
   @Test
   void inorderIterator() {
-    assertEquals(2, tree.inorderIterator().next());
-    assertEquals(3, tree.inorderIterator().next());
+    Iterator<Integer> iterator = tree.inorderIterator();
+    assertEquals(2, iterator.next());
+    assertTrue(iterator.hasNext());
+    assertEquals(3, iterator.next());
+    assertEquals(4, iterator.next());
+    assertEquals(5, iterator.next());
+    assertEquals(6, iterator.next());
+    assertEquals(7, iterator.next());
+    assertEquals(8, iterator.next());
+    assertFalse(iterator.hasNext());
   }
 
   @Test
   void preorderIterator() {
+    Iterator<Integer> iterator = tree.preorderIterator();
+    assertEquals(5, iterator.next());
+    assertTrue(iterator.hasNext());
+    assertEquals(3, iterator.next());
+    assertEquals(2, iterator.next());
+    assertEquals(4, iterator.next());
+    assertEquals(7, iterator.next());
+    assertEquals(6, iterator.next());
+    assertEquals(8, iterator.next());
+    assertFalse(iterator.hasNext());
   }
 
   @Test

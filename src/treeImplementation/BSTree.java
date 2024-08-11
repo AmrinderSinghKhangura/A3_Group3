@@ -3,6 +3,8 @@ package treeImplementation;
 import Interfaces.BSTreeADT;
 import Interfaces.Iterator;
 
+import java.util.Stack;
+
 public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 
   private BSTreeNode<E> root;
@@ -211,7 +213,30 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    */
   @Override
   public Iterator<E> inorderIterator() {
-    return null;
+    Stack<BSTreeNode<E>> stack = new Stack<>();
+    BSTreeNode<E> node = root;
+    while (node != null) {
+      stack.push(node);
+      node = node.getLeft();
+    }
+    return new Iterator<E>() {
+      @Override
+      public boolean hasNext() {
+        return !stack.isEmpty();
+      }
+
+      @Override
+      public E next() {
+        BSTreeNode<E> node = stack.pop();
+        E data = node.getData();
+        node = node.getRight();
+        while (node != null) {
+          stack.push(node);
+          node = node.getLeft();
+        }
+        return data;
+      }
+    };
   }
 
   /**
@@ -221,8 +246,29 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    * @return an iterator with the elements in a root element first order
    */
   @Override
-  public Iterator preorderIterator() {
-    return null;
+  public Iterator<E> preorderIterator() {
+    Stack<BSTreeNode<E>> stack = new Stack<>();
+    if (root != null) {
+      stack.push(root);
+    }
+    return new Iterator<E>() {
+      @Override
+      public boolean hasNext() {
+        return !stack.isEmpty();
+      }
+
+      @Override
+      public E next() {
+        BSTreeNode<E> node = stack.pop();
+        if (node.getRight() != null) {
+          stack.push(node.getRight());
+        }
+        if (node.getLeft() != null) {
+          stack.push(node.getLeft());
+        }
+        return node.getData();
+      }
+    };
   }
 
   /**
@@ -232,8 +278,10 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
    * @return an iterator with the elements in a root element last order
    */
   @Override
-  public Iterator postorderIterator() {
+  public Iterator<E> postorderIterator() {
+
     return null;
+
   }
 }
 
