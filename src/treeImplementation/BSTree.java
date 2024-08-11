@@ -304,7 +304,10 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
       }
 
       @Override
-      public E next() {
+      public E next() throws NoSuchElementException{
+        if(!hasNext()){
+          throw new NoSuchElementException("No More Elements found in the Tree");
+        }
         return output.pop().getData();
       }
     };
